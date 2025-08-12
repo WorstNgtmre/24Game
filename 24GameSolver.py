@@ -25,7 +25,9 @@ def calculate_comb_2(n: tuple, m: tuple):
     m_val, m_expr = m
     results = []
     for operation in OPERATIONS:
-        results.append((calculate(n_val, m_val, operation),f"({n_expr} {operation} {m_expr})"))
+        res = calculate(n_val, m_val, operation)
+        if res is not None:
+            results.append((res,f"({n_expr} {operation} {m_expr})"))
     return results
 
 def calc_n_number(numbers: list):
@@ -43,11 +45,10 @@ def calc_n_number(numbers: list):
                 m_val, m_expr = numbers[j]
 
                 for res_val, res_expr in calculate_comb_2((n_val,n_expr), (m_val,m_expr)):
-                    if res_expr is not None and res_expr is not None:
-                        new_nums = [numbers[k] for k in range(len(numbers)) if k != i and k != j]
-                        new_nums.append((res_val, res_expr))
-                        if calc_n_number(new_nums):
-                            return True
+                    new_nums = [numbers[k] for k in range(len(numbers)) if k != i and k != j]
+                    new_nums.append((res_val, res_expr))
+                    if calc_n_number(new_nums):
+                        return True
     return False
 
 # Main loop
